@@ -40,8 +40,8 @@ def generate_pass():
 
         # Load font
         try:
-            font_large = ImageFont.truetype(FONT_PATH, 90)
-            font_small = ImageFont.truetype(FONT_PATH, 60)
+            font_large = ImageFont.truetype(FONT_PATH, 120)
+            font_small = ImageFont.truetype(FONT_PATH, 80)
         except IOError:
             return "Font file not found. Please add a font file to the folder.", 500
 
@@ -51,14 +51,14 @@ def generate_pass():
         name_height = 0
         for i, line in enumerate(name_lines):
             text_width, text_height = draw.textsize(line, font=font_large)
-            draw.text(((width - text_width) / 2, qr_y - 350 + (i * text_height)),
+            draw.text(((width - text_width) / 2, qr_y - 450 + (i * text_height)),
                       line, font=font_large, fill="white")
             name_height += text_height
 
         # Add emirate below name
         emirate = emirate.upper()
         text_width, text_height = draw.textsize(emirate, font=font_small)
-        draw.text(((width - text_width) / 2, qr_y - 350 + name_height),
+        draw.text(((width - text_width) / 2, qr_y - 430 + name_height),
                   emirate, font=font_small, fill="#FCFF62")
 
         # Save the updated image temporarily
