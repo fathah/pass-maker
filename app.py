@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # Ensure the font file is available in the same folder
 FONT_PATH = "font.ttf"  # Replace with a suitable font path if not present
-PASS_IMAGE_PATH = "pass.png"
+PASS_IMAGE_PATH = "pass2.jpg"
 
 @app.route('/generate-pass', methods=['GET'])
 def generate_pass():
@@ -30,18 +30,18 @@ def generate_pass():
         qr.add_data(user_id)
         qr.make(fit=True)
         qr_image = qr.make_image(fill="black", back_color="white").convert("RGB")
-        qr_size = 280
+        qr_size = 880
         qr_image = qr_image.resize((qr_size, qr_size))
 
         # Position QR Code at bottom center
-        qr_x = 220
-        qr_y = 780
+        qr_x = 640
+        qr_y = 2380
         base_image.paste(qr_image, (qr_x, qr_y))
 
         # Load font
         try:
-            font_large = ImageFont.truetype(FONT_PATH, 40)
-            font_small = ImageFont.truetype(FONT_PATH, 30)
+            font_large = ImageFont.truetype(FONT_PATH, 90)
+            font_small = ImageFont.truetype(FONT_PATH, 60)
         except IOError:
             return "Font file not found. Please add a font file to the folder.", 500
 
@@ -51,18 +51,18 @@ def generate_pass():
         name_height = 0
         for i, line in enumerate(name_lines):
             text_width, text_height = draw.textsize(line, font=font_large)
-            draw.text(((width - text_width) / 2, qr_y - 150 + (i * text_height)),
+            draw.text(((width - text_width) / 2, qr_y - 350 + (i * text_height)),
                       line, font=font_large, fill="white")
             name_height += text_height
 
         # Add emirate below name
         emirate = emirate.upper()
         text_width, text_height = draw.textsize(emirate, font=font_small)
-        draw.text(((width - text_width) / 2, qr_y - 150 + name_height),
+        draw.text(((width - text_width) / 2, qr_y - 350 + name_height),
                   emirate, font=font_small, fill="#FCFF62")
 
         # Save the updated image temporarily
-        output_path = "output.png"
+        output_path = "output.jpg"
         base_image.save(output_path)
 
         # Return the image
